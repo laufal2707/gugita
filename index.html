@@ -2,177 +2,161 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para mi amor</title>
-
-<!-- FUENTE LINDA -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>Mi Amor ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: #ff9bb3;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+  overflow:hidden;
 }
 
-/* FONDO CORAZONES QUIETOS */
-.fondo {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+/* ===== SOBRE ===== */
+.envelope{
+  background:#fff;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  animation: aparecer 1s ease;
 }
 
-.corazon {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  background: #ff4d6d;
-  transform: rotate(45deg);
+.envelope h2{
+  color:#e63946;
+  margin-bottom:20px;
 }
 
-.corazon::before,
-.corazon::after {
-  content: "";
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  background: #ff4d6d;
-  border-radius: 50%;
+.envelope button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:#e63946;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
 }
 
-.corazon::before {
-  top: -17px;
-  left: 0;
+.envelope button:hover{
+  transform:scale(1.05);
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
-.corazon::after {
-  left: -17px;
-  top: 0;
+/* ===== CARTA ===== */
+.card{
+  display:none;
+  background:#fff;
+  width:320px;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  text-align:center;
+  position:relative;
+  animation: aparecer 1s ease;
 }
 
-.corazon span {
-  position: absolute;
-  top: 7px;
-  left: 7px;
-  transform: rotate(-45deg);
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
+@keyframes aparecer{
+  from{transform:scale(0.8); opacity:0;}
+  to{transform:scale(1); opacity:1;}
 }
 
-/* CONTENIDO */
-.inicio {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  color: white;
+.card h2{
+  color:#e63946;
+  margin-bottom:15px;
 }
 
-.inicio img {
-  width: 170px;
-  border-radius: 25px;
-  margin-bottom: 22px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+/* FOTO POLAROID */
+.polaroid{
+  background:#fff;
+  padding:10px 10px 25px;
+  border-radius:10px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.25);
+  margin-bottom:20px;
 }
 
-/* TEXTO LINDO */
-.inicio h1 {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 26px;
+.polaroid img{
+  width:100%;
+  border-radius:8px;
 }
 
-/* BOTÓN ROJO LINDO */
-button {
-  background: #ff1f4a;
-  border: none;
-  padding: 14px 40px;
-  border-radius: 40px;
-  font-size: 17px;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  transition: transform 0.2s ease, background 0.2s ease;
+/* TEXTO CARTA */
+.letter{
+  background:#fff7f7;
+  padding:18px;
+  border-radius:15px;
+  font-family:'Georgia', serif;
+  line-height:1.5;
+  color:#444;
 }
 
-button:hover {
-  background: #e8173f;
-  transform: scale(1.05);
+/* CORAZONES FLOTANDO */
+.heart{
+  position:absolute;
+  color:rgba(255,255,255,0.7);
+  animation: float 8s linear infinite;
 }
 
-/* CARTA (no tocada mucho) */
-.carta {
-  display: none;
-  background: white;
-  color: #444;
-  width: 330px;
-  padding: 25px;
-  border-radius: 30px;
-  text-align: center;
-}
-
-.carta img {
-  width: 200px;
-  border-radius: 20px;
-  margin: 15px 0;
+@keyframes float{
+  0%{transform:translateY(100vh); opacity:0;}
+  10%{opacity:1;}
+  100%{transform:translateY(-10vh); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="musica" src="musica.mp3"></audio>
-
-<!-- FONDO CORAZONES -->
-<div class="fondo" id="fondo"></div>
-
-<!-- INICIO -->
-<div class="inicio" id="inicio">
-  <img src="foto1.jpeg" alt="Mi amor">
-  <h1>💖 Para la guguita más linda 💖</h1>
-  <button onclick="abrirCarta()">Abrir 💌</button>
+<!-- SOBRE -->
+<div class="envelope" id="envelope">
+  <h2>Para mi amor 💌</h2>
+  <button onclick="abrirCarta()">Abrir carta 💖</button>
 </div>
 
 <!-- CARTA -->
-<div class="carta" id="carta">
+<div class="card" id="card">
   <h2>Mi amor ❤️</h2>
-  <img src="foto2.jpeg">
-  <p>
-    Hola guguita, no sabés cuánto te extraño  
-    y cuánto me gustaría estar a tu lado ahora mismo.  
-    Te amo demasiado 💖
-  </p>
+
+  <div class="polaroid">
+    <!-- CAMBIÁ EL NOMBRE SI TU FOTO ES DISTINTA -->
+    <img src="foto.jpg" alt="Nosotros">
+  </div>
+
+  <div class="letter">
+    Hola guguita,<br><br>
+    no sabés cuánto te extraño y cuánto me gustaría
+    estar a tu lado ahora mismo.  
+    Tranquila, ya vamos a estar juntos.  
+    Te amo demasiado y cada día más 💞
+  </div>
 </div>
 
 <script>
-// CREAR MUCHOS CORAZONES QUIETOS
-const fondo = document.getElementById("fondo");
-
-for (let i = 0; i < 35; i++) {
-  const c = document.createElement("div");
-  c.className = "corazon";
-  c.style.left = Math.random() * 100 + "vw";
-  c.style.top = Math.random() * 100 + "vh";
-
-  const t = document.createElement("span");
-  t.innerText = "CU";
-
-  c.appendChild(t);
-  fondo.appendChild(c);
+function abrirCarta(){
+  document.getElementById("envelope").style.display="none";
+  document.getElementById("card").style.display="block";
+  setInterval(crearCorazon,400);
 }
 
-function abrirCarta() {
-  document.getElementById("inicio").style.display = "none";
-  document.getElementById("carta").style.display = "block";
-  document.getElementById("musica").play();
+function crearCorazon(){
+  const heart = document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML = Math.random()>0.5 ? "❤️ A" : "❤️ L";
+  heart.style.left = Math.random()*100+"vw";
+  heart.style.fontSize = (18+Math.random()*20)+"px";
+  heart.style.animationDuration = (6+Math.random()*6)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),12000);
 }
 </script>
 
