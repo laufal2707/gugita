@@ -2,149 +2,178 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mi Amor ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi amor</title>
+
+<!-- FUENTE LINDA -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-body{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4);
-  overflow:hidden;
+body {
+  margin: 0;
+  height: 100vh;
+  background: #ff9bb3;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* corazones flotando */
-.heart{
-  position:absolute;
-  color:rgba(255,255,255,0.6);
-  font-size:22px;
-  animation: float 10s linear infinite;
+/* FONDO CORAZONES QUIETOS */
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
 }
 
-@keyframes float{
-  0%{transform:translateY(100vh) scale(1); opacity:0;}
-  10%{opacity:1;}
-  100%{transform:translateY(-10vh) scale(1.4); opacity:0;}
+.corazon {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  background: #ff4d6d;
+  transform: rotate(45deg);
 }
 
-/* carta */
-.card{
-  background:#fff;
-  width:320px;
-  padding:25px;
-  border-radius:25px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.2);
-  text-align:center;
-  animation: aparecer 1.2s ease;
-  position:relative;
+.corazon::before,
+.corazon::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  background: #ff4d6d;
+  border-radius: 50%;
 }
 
-@keyframes aparecer{
-  from{transform:scale(0.8); opacity:0;}
-  to{transform:scale(1); opacity:1;}
+.corazon::before {
+  top: -17px;
+  left: 0;
 }
 
-.card h2{
-  color:#e63946;
-  margin-bottom:15px;
+.corazon::after {
+  left: -17px;
+  top: 0;
 }
 
-/* foto estilo polaroid */
-.polaroid{
-  background:#fff;
-  padding:10px 10px 25px;
-  border-radius:10px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.25);
-  transform:rotate(-2deg);
-  margin-bottom:20px;
+.corazon span {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  transform: rotate(-45deg);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
 }
 
-.polaroid img{
-  width:100%;
-  border-radius:8px;
+/* CONTENIDO */
+.inicio {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
 }
 
-/* carta escrita */
-.letter{
-  background:#fff7f7;
-  padding:18px;
-  border-radius:15px;
-  font-family:'Georgia', serif;
-  line-height:1.5;
-  color:#444;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+.inicio img {
+  width: 170px;
+  border-radius: 25px;
+  margin-bottom: 22px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* corazones A y L */
-.initial{
-  position:absolute;
-  font-size:26px;
-  animation: pulse 2s infinite;
+/* TEXTO LINDO */
+.inicio h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 26px;
 }
 
-.initial.a{
-  top:-15px;
-  left:-15px;
+/* BOTÓN ROJO LINDO */
+button {
+  background: #ff1f4a;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 40px;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.initial.l{
-  bottom:-15px;
-  right:-15px;
+button:hover {
+  background: #e8173f;
+  transform: scale(1.05);
 }
 
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.2);}
-  100%{transform:scale(1);}
+/* CARTA (no tocada mucho) */
+.carta {
+  display: none;
+  background: white;
+  color: #444;
+  width: 330px;
+  padding: 25px;
+  border-radius: 30px;
+  text-align: center;
+}
+
+.carta img {
+  width: 200px;
+  border-radius: 20px;
+  margin: 15px 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Carta -->
-<div class="card">
-  <span class="initial a">❤️ A</span>
-  <span class="initial l">❤️ L</span>
+<audio id="musica" src="musica.mp3"></audio>
 
-  <h2>Mi amor 💖</h2>
+<!-- FONDO CORAZONES -->
+<div class="fondo" id="fondo"></div>
 
-  <div class="polaroid">
-    <img src="foto.jpg" alt="Nosotros">
-  </div>
+<!-- INICIO -->
+<div class="inicio" id="inicio">
+  <img src="foto1.jpeg" alt="Mi amor">
+  <h1>💖 Para la guguita más linda 💖</h1>
+  <button onclick="abrirCarta()">Abrir 💌</button>
+</div>
 
-  <div class="letter">
-    Hola guguita,<br><br>
-    no sabés cuánto te extraño y cuánto me gustaría
-    estar a tu lado ahora mismo.  
-    Tranquila, ya vamos a estar juntos.  
-    Te amo demasiado y cada día más 💞
-  </div>
+<!-- CARTA -->
+<div class="carta" id="carta">
+  <h2>Mi amor ❤️</h2>
+  <img src="foto2.jpeg">
+  <p>
+    Hola guguita, no sabés cuánto te extraño  
+    y cuánto me gustaría estar a tu lado ahora mismo.  
+    Te amo demasiado 💖
+  </p>
 </div>
 
 <script>
-function crearCorazon(){
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = Math.random() > 0.5 ? "❤️ A" : "❤️ L";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (16 + Math.random()*20) + "px";
-  heart.style.animationDuration = (6 + Math.random()*6) + "s";
-  document.body.appendChild(heart);
+// CREAR MUCHOS CORAZONES QUIETOS
+const fondo = document.getElementById("fondo");
 
-  setTimeout(()=>{heart.remove()},12000);
+for (let i = 0; i < 35; i++) {
+  const c = document.createElement("div");
+  c.className = "corazon";
+  c.style.left = Math.random() * 100 + "vw";
+  c.style.top = Math.random() * 100 + "vh";
+
+  const t = document.createElement("span");
+  t.innerText = "CU";
+
+  c.appendChild(t);
+  fondo.appendChild(c);
 }
 
-setInterval(crearCorazon,400);
+function abrirCarta() {
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("carta").style.display = "block";
+  document.getElementById("musica").play();
+}
 </script>
 
 </body>
