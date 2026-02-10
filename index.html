@@ -7,41 +7,61 @@
 <style>
 * {
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 body {
   margin: 0;
   height: 100vh;
-  background: #ff8fa3;
+  background: linear-gradient(180deg, #ff9eb3, #ff6f91);
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* CONTENEDOR PRINCIPAL */
-.contenedor {
-  text-align: center;
-  color: white;
+/* ANIMACIÓN TEXTO */
+@keyframes aparecerTexto {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* IMAGEN */
-.contenedor img {
+/* PANTALLA INICIAL */
+.inicio {
+  text-align: center;
+  color: white;
+  animation: aparecerTexto 1.5s ease;
+}
+
+.inicio img {
   width: 160px;
-  border-radius: 20px;
+  border-radius: 25px;
   margin-bottom: 20px;
+  animation: aparecerTexto 2s ease;
+}
+
+.inicio h1 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  animation: aparecerTexto 2.5s ease;
 }
 
 /* BOTÓN */
 button {
   background: white;
   border: none;
-  padding: 14px 32px;
-  border-radius: 30px;
-  font-size: 16px;
+  padding: 15px 36px;
+  border-radius: 40px;
+  font-size: 18px;
   cursor: pointer;
   color: #ff4d6d;
+  animation: latir 2s infinite;
+}
+
+@keyframes latir {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 button:hover {
@@ -51,40 +71,90 @@ button:hover {
 /* CARTA */
 .carta {
   display: none;
+  position: relative;
   background: white;
   color: #444;
-  width: 300px;
+  width: 330px;
   padding: 25px;
-  border-radius: 20px;
-  animation: aparecer 1s ease;
+  border-radius: 30px;
+  text-align: center;
+  animation: abrirCarta 1.2s ease;
 }
 
-@keyframes aparecer {
+@keyframes abrirCarta {
   from {
-    transform: scale(0.6);
+    transform: scale(0.5) rotateX(90deg);
     opacity: 0;
   }
   to {
-    transform: scale(1);
+    transform: scale(1) rotateX(0);
     opacity: 1;
   }
+}
+
+.carta h2 {
+  animation: aparecerTexto 1.5s ease;
+}
+
+.carta p {
+  animation: aparecerTexto 2s ease;
+}
+
+/* FOTO DENTRO */
+.carta img {
+  width: 200px;
+  border-radius: 20px;
+  margin: 15px 0;
+  animation: aparecerTexto 1.8s ease;
 }
 
 /* CORAZONES */
 .corazon {
   position: fixed;
-  color: red;
-  font-size: 20px;
-  animation: flotar 5s linear forwards;
+  background: #ff4d6d;
+  width: 30px;
+  height: 30px;
+  transform: rotate(45deg);
+  animation: flotar 6s linear forwards;
+}
+
+.corazon::before,
+.corazon::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #ff4d6d;
+  border-radius: 50%;
+}
+
+.corazon::before {
+  top: -15px;
+  left: 0;
+}
+
+.corazon::after {
+  left: -15px;
+  top: 0;
+}
+
+.corazon span {
+  position: absolute;
+  transform: rotate(-45deg);
+  top: 7px;
+  left: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
 }
 
 @keyframes flotar {
   from {
-    transform: translateY(100vh);
+    transform: translateY(100vh) rotate(45deg);
     opacity: 1;
   }
   to {
-    transform: translateY(-10vh);
+    transform: translateY(-10vh) rotate(45deg);
     opacity: 0;
   }
 }
@@ -95,7 +165,7 @@ button:hover {
 
 <audio id="musica" src="musica.mp3"></audio>
 
-<div class="contenedor" id="inicio">
+<div class="inicio" id="inicio">
   <img src="foto1.jpeg" alt="Mi amor">
   <h1>💖 Para la guguita más linda 💖</h1>
   <button onclick="abrirCarta()">Abrir 💌</button>
@@ -103,13 +173,14 @@ button:hover {
 
 <div class="carta" id="carta">
   <h2>Mi amor ❤️</h2>
+
+  <img src="foto2.jpeg" alt="Nosotros">
+
   <p>
-    Hola guguita, no sabés cuánto te extraño y cuánto me gustaría
-    estar a tu lado ahora mismo.  
-    Tranquila, ya vamos a estar juntos.
-    No va a ser una carta larga, pero quería hacerte algo especial
-    porque sos la mejor y te lo voy a repetir siempre.
-    Te amo demasiado 💖
+    Hola guguita, no sabés cuánto te extraño  
+    y cuánto me gustaría estar a tu lado ahora mismo.  
+    Tranquila, ya vamos a estar juntos.  
+    Te amo demasiado y cada día más 💖
   </p>
 </div>
 
@@ -118,26 +189,31 @@ function abrirCarta() {
   document.getElementById("inicio").style.display = "none";
   document.getElementById("carta").style.display = "block";
 
-  const musica = document.getElementById("musica");
-  musica.play();
+  document.getElementById("musica").play();
 
-  setInterval(crearCorazon, 400);
+  setInterval(crearCorazon, 150);
 }
 
 function crearCorazon() {
   const corazon = document.createElement("div");
   corazon.classList.add("corazon");
-  corazon.innerHTML = "❤️";
+
+  const texto = document.createElement("span");
+  texto.innerText = "cu";
+
+  corazon.appendChild(texto);
+
   corazon.style.left = Math.random() * 100 + "vw";
-  corazon.style.fontSize = (Math.random() * 20 + 15) + "px";
+  const size = Math.random() * 20 + 25;
+  corazon.style.width = corazon.style.height = size + "px";
+
   document.body.appendChild(corazon);
 
   setTimeout(() => {
     corazon.remove();
-  }, 5000);
+  }, 6000);
 }
 </script>
 
 </body>
 </html>
-
